@@ -1,0 +1,2 @@
+# ostatkbot
+bot
