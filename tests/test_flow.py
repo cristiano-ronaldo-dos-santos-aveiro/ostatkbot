@@ -16,7 +16,7 @@ async def add_product(h, name, unit_label, sellable, price, min_stock):
     await h.click(M, "Добавить товар")
     await h.click(M, unit_label)
     await h.send(M, name)
-    await h.click(M, "Да" if sellable else "Нет")
+    await h.click(M, "Продаётся отдельно" if sellable else "Расходник")
     if sellable:
         await h.send(M, price)
     await h.send(M, min_stock)

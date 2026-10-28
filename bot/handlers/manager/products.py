@@ -11,7 +11,7 @@ from bot.db import crud
 from bot.db.models import Product, Unit, User
 from bot.filters import TEXT_INPUT
 from bot.keyboards.callbacks import CB
-from bot.keyboards.inline import back_btn, btn, close_btn, markup, nav_row, yes_no_rows
+from bot.keyboards.inline import back_btn, btn, close_btn, markup, nav_row
 from bot.keyboards.reply import MB
 from bot.services.audit import audit
 from bot.services.formatting import (
@@ -122,8 +122,17 @@ def _add_prompt(step: str, data: dict) -> tuple[str, InlineKeyboardMarkup]:
     if step == "name":
         return f"{head}\n\nШаг 2/5. Отправьте название товара:", markup([nav_row()])
     if step == "sellable":
-        return f"{head}\n\nШаг 3/5. Продаётся отдельно (например, круассан, вода)?", markup(
-            yes_no_rows("padd_sell") + [nav_row()]
+        return (
+            f"{head}\n\nШаг 3/5. Это товар для продажи или расходник?\n\n"
+            "🛒 Для продажи — покупатель берёт его отдельно: круассан, вода, шоколад.\n"
+            "📦 Расходник — уходит в напитки: стаканы, крышки, кофе, молоко, сиропы.",
+            markup(
+                [
+                    [btn("🛒 Продаётся отдельно", "padd_sell", v="1")],
+                    [btn("📦 Расходник", "padd_sell", v="0")],
+                    nav_row(),
+                ]
+            ),
         )
     if step == "price":
         return f"{head}\n\nШаг 4/5. Цена продажи за 1 шт:", markup([nav_row()])
