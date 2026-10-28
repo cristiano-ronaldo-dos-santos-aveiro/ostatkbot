@@ -1,0 +1,16 @@
+[Unit]
+Description=Coffee shop Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=coffeebot
+WorkingDirectory=/opt/coffee-bot
+ExecStart=/opt/coffee-bot/.venv/bin/python main.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
